@@ -25,16 +25,16 @@ import (
 func main() {
 	http.HandleFunc("/ws", websocket.WebSocketHandler)
 
-	// Health check endpoint for Railway
+	// Health check endpoint (Railway needs this)
 	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("OK"))
 	})
 
-	// Use dynamic port
+	// Railway gives PORT dynamically
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "9090" // fallback for local testing
+		port = "9090" // local fallback
 	}
 
 	fmt.Println("Server running on port", port)
@@ -43,7 +43,3 @@ func main() {
 		fmt.Println("Server failed:", err)
 	}
 }
-
-
-
-
